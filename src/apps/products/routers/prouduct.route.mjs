@@ -8,7 +8,7 @@ const controller = new ProductController();
 
 /**
  * @swagger
- * /products:
+ * /api/products:
  *   get:
  *     summary: Retrieve a list of products
  *     tags: [Products]
@@ -73,11 +73,11 @@ const controller = new ProductController();
  *       500:
  *         description: Internal server error
  */
-router.get("/", controller.getAllProducts);
+router.get("/",  authMiddleware, controller.getAllProducts);
 
 /**
  * @swagger
- * /products:
+ * /api/products:
  *   post:
  *     summary: Add a new product
  *     tags: [Products]
@@ -154,7 +154,7 @@ router.post("/", authMiddleware, roleMiddleware("admin"), controller.addProduct)
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   put:
  *     summary: Update an existing product
  *     tags: [Products]
@@ -236,7 +236,7 @@ router.put("/:id", authMiddleware, roleMiddleware("admin"), controller.updatePro
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *   delete:
  *     summary: Delete a product
  *     tags: [Products]
