@@ -437,3 +437,78 @@ export const APP_CONSTANTS = {
   SWAGGER_UI_MESSAGE: "📜 Swagger UI available at http://localhost:",
   SWAGGER_UI_PATH: "/api-docs",
 };
+
+/**
+ * @constant {Array<string>} CORS_ORIGINS
+ * @description List of allowed origins for CORS requests.
+ * This array contains the URLs that are permitted to access the API resources.
+ * @type {Array<string>}
+ */
+
+export const CORS_ORIGINS = [
+  "http://localhost:3000",
+  "https://products-api-6psx.onrender.com"
+];
+
+/**
+ * @constant {string} PRODUCTION_SERVER_URL
+ * @description The URL of the production server where the application is hosted.
+ * This constant is used to define the base URL for API requests in production environments.
+ * @type {string}
+ */
+export const PRODUCTION_SERVER_URL = "https://products-api-6psx.onrender.com";
+
+/**
+ * @constant {string} DEVELOPMENT_SERVER_URL
+ * @description The URL of the development server where the application is hosted.
+ * This constant is used to define the base URL for API requests in development environments.
+ */
+export const DESC = {
+  EXPRESS_INIT: "Initializes and configures the Express application.",
+  JSON_MIDDLEWARE: "Middleware to parse incoming JSON requests.",
+  MONGO_CONNECT: "Connects to MongoDB using the provided MONGO_URI environment variable.",
+  MONGO_CONNECT_ERROR: "If the connection fails, logs the error and exits the process.",
+  AUTH_ROUTE: "Mounts the authentication routes under /api/auth.",
+  PRODUCT_ROUTE: "Mounts the product routes under /api/products.",
+  SWAGGER_CONFIG: "Configures Swagger UI for API documentation.",
+  ERROR_MIDDLEWARE: "Applies the error handling middleware to catch and process errors.",
+  SERVER_START: "Starts the Express server on the specified port.",
+  SWAGGER_SETUP: "Configures Swagger UI for the Express application.",
+  SWAGGER_SERVE: "Serves the Swagger UI at /api-docs.",
+};
+
+/** 
+ * @constant {Object} FUNCTION_NAMES
+ * @property {string} SETUP_SWAGGER - Name of the function that sets up Swagger UI.
+ * @description Contains names of functions used in the application, primarily for Swagger setup.
+ */
+
+export const FUNCTION_NAMES = {
+  SETUP_SWAGGER: "setupSwagger",
+};
+
+/**
+ * @constant {Object} PARAMS
+ * @property {string} APP - Parameter name for the application context.
+ * @description Contains parameter names used in the application, primarily for route handlers and middleware.
+ */
+export const PARAMS = {
+  APP: "app",
+};
+
+/**
+ * @constant {Object} RETURN
+ * @property {string} VOID - Represents a void return type.
+ * @description Contains return types used in the application, primarily for function return values.
+ */
+
+export const RETURN = {
+  VOID: "void",
+};
+
+/**
+ * @constant {string} PROD_SERVER_DESCRIPTION
+ * @description Description of the production server.
+ * This constant is used to provide a brief description of the production server in the API documentation.
+ */
+export const PROD_SERVER_DESCRIPTION = "Production server";

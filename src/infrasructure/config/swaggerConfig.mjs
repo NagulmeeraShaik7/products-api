@@ -1,6 +1,6 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import { SWAGGER_CONSTANTS } from "../constants/constants.mjs";
+import { SWAGGER_CONSTANTS, PRODUCTION_SERVER_URL, PROD_SERVER_DESCRIPTION, DESC, FUNCTION_NAMES, PARAMS, RETURN } from "../constants/constants.mjs";
 
 /**
  * Swagger configuration options for generating API documentation.
@@ -18,6 +18,10 @@ const swaggerOptions = {
       {
         url: SWAGGER_CONSTANTS.SERVER_URL,
         description: SWAGGER_CONSTANTS.SERVER_DESCRIPTION,
+      },
+      {
+        url: PRODUCTION_SERVER_URL,
+        description: PROD_SERVER_DESCRIPTION,
       },
     ],
     components: {

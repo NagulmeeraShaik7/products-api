@@ -5,7 +5,9 @@ import authRouter from "../src/apps/auth/routers/auth.route.mjs";
 import productRouter from "../src/apps/products/routers/prouduct.route.mjs";
 import errorMiddleware from "./middlewares/error.middleware.mjs";
 import setupSwagger from "./infrasructure/config/swaggerConfig.mjs";
-import { APP_CONSTANTS } from "../src/infrasructure/constants/constants.mjs";
+import { APP_CONSTANTS, DESC } from "../src/infrasructure/constants/constants.mjs";
+import cors from "cors";
+import { CORS_ORIGINS } from "../src/infrasructure/constants/constants.mjs";
 
 // Load environment variables
 dotenv.config();
@@ -61,6 +63,12 @@ app.use(errorMiddleware);
  * @constant {number} PORT - The port number from environment variable or default to 3000.
  */
 const PORT = process.env.PORT || 3000;
+
+app.use(cors({
+  origin: CORS_ORIGINS,
+  credentials: true
+}));
+
 app.listen(PORT, () => {
   console.log(`${APP_CONSTANTS.SERVER_START_MESSAGE}${PORT}`);
   console.log(`${APP_CONSTANTS.SWAGGER_UI_MESSAGE}${PORT}${APP_CONSTANTS.SWAGGER_UI_PATH}`);
