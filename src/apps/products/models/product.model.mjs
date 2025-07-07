@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import {
+  COLLECTION_NAMES,
+  PRODUCT_FIELDS,
+} from "../../../infrasructure/constants/constants.mjs";
 
 /**
  * Mongoose schema for the Product model.
@@ -12,11 +16,11 @@ import mongoose from "mongoose";
  */
 const productSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    category: { type: String, required: true },
-    price: { type: Number, required: true },
-    description: { type: String },
-    image: { type: String },
+    [PRODUCT_FIELDS.NAME]: { type: String, required: true },
+    [PRODUCT_FIELDS.CATEGORY]: { type: String, required: true },
+    [PRODUCT_FIELDS.PRICE]: { type: Number, required: true },
+    [PRODUCT_FIELDS.DESCRIPTION]: { type: String },
+    [PRODUCT_FIELDS.IMAGE]: { type: String },
   },
   { timestamps: true }
 );
@@ -25,4 +29,4 @@ const productSchema = new mongoose.Schema(
  * Mongoose model for the Product collection.
  * @type {mongoose.Model}
  */
-export const Product = mongoose.model("Product", productSchema);
+export const Product = mongoose.model(COLLECTION_NAMES.PRODUCT, productSchema);

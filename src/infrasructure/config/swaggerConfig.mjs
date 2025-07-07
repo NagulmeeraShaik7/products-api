@@ -1,5 +1,6 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import { SWAGGER_CONSTANTS } from "../constants/constants.mjs";
 
 /**
  * Swagger configuration options for generating API documentation.
@@ -7,229 +8,229 @@ import swaggerUi from "swagger-ui-express";
  */
 const swaggerOptions = {
   definition: {
-    openapi: "3.0.0",
+    openapi: SWAGGER_CONSTANTS.OPENAPI_VERSION,
     info: {
-      title: "E-Commerce API",
-      version: "1.0.0",
-      description: "API documentation for the E-Commerce application",
+      title: SWAGGER_CONSTANTS.API_TITLE,
+      version: SWAGGER_CONSTANTS.API_VERSION,
+      description: SWAGGER_CONSTANTS.API_DESCRIPTION,
     },
     servers: [
       {
-        url: `http://localhost:${process.env.PORT || 3000}`,
-        description: "Development server",
+        url: SWAGGER_CONSTANTS.SERVER_URL,
+        description: SWAGGER_CONSTANTS.SERVER_DESCRIPTION,
       },
     ],
     components: {
       securitySchemes: {
-        bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
+        [SWAGGER_CONSTANTS.BEARER_AUTH_NAME]: {
+          type: SWAGGER_CONSTANTS.BEARER_AUTH_TYPE,
+          scheme: SWAGGER_CONSTANTS.BEARER_AUTH_SCHEME,
+          bearerFormat: SWAGGER_CONSTANTS.BEARER_AUTH_FORMAT,
         },
       },
       schemas: {
         User: {
-          type: "object",
-          required: ["username", "email", "password", "role"],
+          type: SWAGGER_CONSTANTS.USER_TYPE,
+          required: SWAGGER_CONSTANTS.USER_REQUIRED,
           properties: {
             _id: {
-              type: "string",
-              description: "The unique identifier for the user",
-              example: "60d0fe4f5311236168a109ca",
+              type: SWAGGER_CONSTANTS.USER_ID_TYPE,
+              description: SWAGGER_CONSTANTS.USER_ID_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.USER_ID_EXAMPLE,
             },
             username: {
-              type: "string",
-              description: "The username of the user",
-              example: "john_doe",
+              type: SWAGGER_CONSTANTS.USER_USERNAME_TYPE,
+              description: SWAGGER_CONSTANTS.USER_USERNAME_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.USER_USERNAME_EXAMPLE,
             },
             email: {
-              type: "string",
-              description: "The email address of the user",
-              example: "john.doe@example.com",
+              type: SWAGGER_CONSTANTS.USER_EMAIL_TYPE,
+              description: SWAGGER_CONSTANTS.USER_EMAIL_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.USER_EMAIL_EXAMPLE,
             },
             password: {
-              type: "string",
-              description: "The hashed password of the user (not returned in responses)",
-              example: "$2a$10$hashedpassword",
+              type: SWAGGER_CONSTANTS.USER_PASSWORD_TYPE,
+              description: SWAGGER_CONSTANTS.USER_PASSWORD_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.USER_PASSWORD_EXAMPLE,
             },
             role: {
-              type: "string",
-              enum: ["customer", "admin"],
-              description: "The role of the user",
-              example: "customer",
+              type: SWAGGER_CONSTANTS.USER_ROLE_TYPE,
+              enum: SWAGGER_CONSTANTS.USER_ROLE_ENUM,
+              description: SWAGGER_CONSTANTS.USER_ROLE_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.USER_ROLE_EXAMPLE,
             },
             createdAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the user was created",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.USER_CREATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.USER_CREATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.USER_CREATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.USER_CREATED_AT_EXAMPLE,
             },
             updatedAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the user was last updated",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.USER_UPDATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.USER_UPDATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.USER_UPDATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.USER_UPDATED_AT_EXAMPLE,
             },
           },
         },
         Product: {
-          type: "object",
-          required: ["name", "category", "price"],
+          type: SWAGGER_CONSTANTS.PRODUCT_TYPE,
+          required: SWAGGER_CONSTANTS.PRODUCT_REQUIRED,
           properties: {
             _id: {
-              type: "string",
-              description: "The unique identifier for the product",
-              example: "60d0fe4f5311236168a109cb",
+              type: SWAGGER_CONSTANTS.PRODUCT_ID_TYPE,
+              description: SWAGGER_CONSTANTS.PRODUCT_ID_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_ID_EXAMPLE,
             },
             name: {
-              type: "string",
-              description: "The name of the product",
-              example: "Laptop",
+              type: SWAGGER_CONSTANTS.PRODUCT_NAME_TYPE,
+              description: SWAGGER_CONSTANTS.PRODUCT_NAME_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_NAME_EXAMPLE,
             },
             category: {
-              type: "string",
-              description: "The category of the product",
-              example: "Electronics",
+              type: SWAGGER_CONSTANTS.PRODUCT_CATEGORY_TYPE,
+              description: SWAGGER_CONSTANTS.PRODUCT_CATEGORY_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_CATEGORY_EXAMPLE,
             },
             price: {
-              type: "number",
-              description: "The price of the product",
-              example: 999.99,
+              type: SWAGGER_CONSTANTS.PRODUCT_PRICE_TYPE,
+              description: SWAGGER_CONSTANTS.PRODUCT_PRICE_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_PRICE_EXAMPLE,
             },
             description: {
-              type: "string",
-              description: "The description of the product",
-              example: "A high-performance laptop",
+              type: SWAGGER_CONSTANTS.PRODUCT_DESCRIPTION_TYPE,
+              description: SWAGGER_CONSTANTS.PRODUCT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_DESCRIPTION_EXAMPLE,
             },
             image: {
-              type: "string",
-              description: "URL or path to the product image",
-              example: "http://example.com/images/laptop.jpg",
+              type: SWAGGER_CONSTANTS.PRODUCT_IMAGE_TYPE,
+              description: SWAGGER_CONSTANTS.PRODUCT_IMAGE_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_IMAGE_EXAMPLE,
             },
             createdAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the product was created",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.PRODUCT_CREATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.PRODUCT_CREATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.PRODUCT_CREATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_CREATED_AT_EXAMPLE,
             },
             updatedAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the product was last updated",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.PRODUCT_UPDATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.PRODUCT_UPDATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.PRODUCT_UPDATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.PRODUCT_UPDATED_AT_EXAMPLE,
             },
           },
         },
         Cart: {
-          type: "object",
-          required: ["userId"],
+          type: SWAGGER_CONSTANTS.CART_TYPE,
+          required: SWAGGER_CONSTANTS.CART_REQUIRED,
           properties: {
             _id: {
-              type: "string",
-              description: "The unique identifier for the cart",
-              example: "60d0fe4f5311236168a109cc",
+              type: SWAGGER_CONSTANTS.CART_ID_TYPE,
+              description: SWAGGER_CONSTANTS.CART_ID_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.CART_ID_EXAMPLE,
             },
             userId: {
-              type: "string",
-              description: "Reference to the user who owns the cart",
-              example: "60d0fe4f5311236168a109ca",
+              type: SWAGGER_CONSTANTS.CART_USER_ID_TYPE,
+              description: SWAGGER_CONSTANTS.CART_USER_ID_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.CART_USER_ID_EXAMPLE,
             },
             items: {
-              type: "array",
-              description: "Array of items in the cart",
+              type: SWAGGER_CONSTANTS.CART_ITEMS_TYPE,
+              description: SWAGGER_CONSTANTS.CART_ITEMS_DESCRIPTION,
               items: {
-                type: "object",
+                type: SWAGGER_CONSTANTS.CART_ITEM_TYPE,
                 properties: {
                   productId: {
-                    type: "string",
-                    description: "Reference to the product in the cart",
-                    example: "60d0fe4f5311236168a109cb",
+                    type: SWAGGER_CONSTANTS.CART_ITEM_PRODUCT_ID_TYPE,
+                    description: SWAGGER_CONSTANTS.CART_ITEM_PRODUCT_ID_DESCRIPTION,
+                    example: SWAGGER_CONSTANTS.CART_ITEM_PRODUCT_ID_EXAMPLE,
                   },
                   quantity: {
-                    type: "number",
-                    description: "Quantity of the product in the cart",
-                    example: 1,
+                    type: SWAGGER_CONSTANTS.CART_ITEM_QUANTITY_TYPE,
+                    description: SWAGGER_CONSTANTS.CART_ITEM_QUANTITY_DESCRIPTION,
+                    example: SWAGGER_CONSTANTS.CART_ITEM_QUANTITY_EXAMPLE,
                   },
                 },
               },
             },
             createdAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the cart was created",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.CART_CREATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.CART_CREATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.CART_CREATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.CART_CREATED_AT_EXAMPLE,
             },
             updatedAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the cart was last updated",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.CART_UPDATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.CART_UPDATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.CART_UPDATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.CART_UPDATED_AT_EXAMPLE,
             },
           },
         },
         Order: {
-          type: "object",
-          required: ["userId", "items", "totalAmount", "status"],
+          type: SWAGGER_CONSTANTS.ORDER_TYPE,
+          required: SWAGGER_CONSTANTS.ORDER_REQUIRED,
           properties: {
             _id: {
-              type: "string",
-              description: "The unique identifier for the order",
-              example: "60d0fe4f5311236168a109cd",
+              type: SWAGGER_CONSTANTS.ORDER_ID_TYPE,
+              description: SWAGGER_CONSTANTS.ORDER_ID_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.ORDER_ID_EXAMPLE,
             },
             userId: {
-              type: "string",
-              description: "Reference to the user who placed the order",
-              example: "60d0fe4f5311236168a109ca",
+              type: SWAGGER_CONSTANTS.ORDER_USER_ID_TYPE,
+              description: SWAGGER_CONSTANTS.ORDER_USER_ID_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.ORDER_TEST_ID_EXAMPLE,
             },
             items: {
-              type: "array",
-              description: "Array of items in the order",
+              type: SWAGGER_CONSTANTS.ORDER_ITEMS_TYPE,
+              description: SWAGGER_CONSTANTS.ORDER_ITEMS_DESCRIPTION,
               items: {
-                type: "object",
-                required: ["productId", "quantity"],
+                type: SWAGGER_CONSTANTS.ORDER_ITEM_TYPE,
+                required: SWAGGER_CONSTANTS.ORDER_ITEM_REQUIRED,
                 properties: {
                   productId: {
-                    type: "string",
-                    description: "Reference to the product in the order",
-                    example: "60d0fe4f5311236168a109cb",
+                    type: SWAGGER_CONSTANTS.ORDER_ITEM_PRODUCT_ID_TYPE,
+                    description: SWAGGER_CONSTANTS.ORDER_ITEM_PRODUCT_ID_DESCRIPTION,
+                    example: SWAGGER_CONSTANTS.ORDER_ITEM_PRODUCT_ID_EXAMPLE,
                   },
                   quantity: {
-                    type: "number",
-                    description: "Quantity of the product in the order",
-                    example: 2,
+                    type: SWAGGER_CONSTANTS.ORDER_ITEM_QUANTITY_TYPE,
+                    description: SWAGGER_CONSTANTS.ORDER_ITEM_QUANTITY_DESCRIPTION,
+                    example: SWAGGER_CONSTANTS.ORDER_ITEM_QUANTITY_EXAMPLE,
                   },
                 },
               },
             },
             totalAmount: {
-              type: "number",
-              description: "Total amount for the order",
-              example: 1999.98,
+              type: SWAGGER_CONSTANTS.ORDER_TOTAL_AMOUNT_TYPE,
+              description: SWAGGER_CONSTANTS.ORDER_TOTAL_AMOUNT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.ORDER_TOTAL_AMOUNT_EXAMPLE,
             },
             status: {
-              type: "string",
-              enum: ["placed", "shipped", "delivered"],
-              description: "Status of the order",
-              example: "placed",
+              type: SWAGGER_CONSTANTS.ORDER_STATUS_TYPE,
+              enum: SWAGGER_CONSTANTS.ORDER_STATUS_ENUM,
+              description: SWAGGER_CONSTANTS.ORDER_STATUS_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.ORDER_STATUS_EXAMPLE,
             },
             createdAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the order was created",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.ORDER_CREATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.ORDER_CREATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.ORDER_CREATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.ORDER_CREATED_AT_EXAMPLE,
             },
             updatedAt: {
-              type: "string",
-              format: "date-time",
-              description: "Timestamp when the order was last updated",
-              example: "2025-07-07T14:56:00.000Z",
+              type: SWAGGER_CONSTANTS.ORDER_UPDATED_AT_TYPE,
+              format: SWAGGER_CONSTANTS.ORDER_UPDATED_AT_FORMAT,
+              description: SWAGGER_CONSTANTS.ORDER_UPDATED_AT_DESCRIPTION,
+              example: SWAGGER_CONSTANTS.ORDER_UPDATED_AT_EXAMPLE,
             },
           },
         },
       },
     },
   },
-  apis: ["./src/apps/auth/routers/auth.route.mjs", "./src/apps/products/routers/prouduct.route.mjs"],
+  apis: SWAGGER_CONSTANTS.API_PATHS,
 };
 
 /**
@@ -247,7 +248,7 @@ const setupSwagger = (app) => {
   /**
    * Serves the Swagger UI at /api-docs.
    */
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use(SWAGGER_CONSTANTS.SWAGGER_UI_ROUTE, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
 
 export default setupSwagger;

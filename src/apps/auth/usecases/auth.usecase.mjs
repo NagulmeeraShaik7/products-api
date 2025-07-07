@@ -1,6 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.mjs";
+import {
+  ROLES,
+  ERROR_MESSAGES,
+  TOKEN_CONSTANTS,
+} from "../../../infrasructure/constants/constants.mjs";
 
 /**
  * Use case class for handling authentication-related business logic.
@@ -24,10 +29,10 @@ export class AuthUsecase {
    * @returns {Promise<Object>} The created user document.
    * @throws {Error} If a user with the provided email already exists.
    */
-  async registerUser({ username, email, password, role = "customer" }) {
+  async registerUser({ username, email, password, role = ROLES.CUSTOMER }) {
     const existingUser = await this.authRepository.findByEmail(email);
     if (existingUser) {
-      throw new Error("User already exists");
+      throw new Error(ERROR_MESSAGES.USER_EXISTS);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,16 +55,18 @@ export class AuthUsecase {
   async loginUser({ email, password }) {
     const user = await this.authRepository.findByEmail(email);
     if (!user) {
-      throw new Error("Invalid credentials");
+      throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      throw new Error("Invalid credentials");
+      throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
 
     const payload = { userId: user._id, role: user.role };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: TOKEN_CONSTANTS.EXPIRES_IN,
+    });
 
     return token;
   }

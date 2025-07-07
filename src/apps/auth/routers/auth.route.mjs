@@ -1,5 +1,11 @@
 import express from "express";
 import { AuthController } from "../controllers/auth.controller.mjs";
+import {
+  ROUTES,
+  HTTP_STATUS_CODES,
+  SWAGGER_TAGS,
+  AUTH_MESSAGES,
+} from "../../../infrasructure/constants/constants.mjs";
 
 const authController = new AuthController();
 const router = express.Router();
@@ -67,7 +73,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/register", authController.register);
+router.post(ROUTES.REGISTER, authController.register);
 
 /**
  * @swagger
@@ -110,6 +116,6 @@ router.post("/register", authController.register);
  *       500:
  *         description: Internal server error
  */
-router.post("/login", authController.login);
+router.post(ROUTES.LOGIN, authController.login);
 
 export default router;
