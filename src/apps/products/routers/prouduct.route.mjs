@@ -154,7 +154,7 @@ router.get(ROUTES.ROOT, authMiddleware, controller.getAllProducts);
  *       500:
  *         description: Internal server error
  */
-router.post(ROUTES.ROOT, authMiddleware, roleMiddleware(USER_ROLES.ADMIN), controller.addProduct);
+router.post(ROUTES.ROOT, authMiddleware, roleMiddleware(USER_ROLES.ADMIN), controller.addProduct.bind(controller));
 
 /**
  * @swagger
