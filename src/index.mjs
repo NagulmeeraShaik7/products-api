@@ -8,13 +8,21 @@ import errorMiddleware from "./middlewares/error.middleware.mjs";
 // Load environment variables
 dotenv.config();
 
-// Initialize Express app
+/**
+ * Initializes and configures the Express application.
+ * @function
+ */
 const app = express();
 
-// Middleware to parse JSON
+/**
+ * Middleware to parse incoming JSON requests.
+ */
 app.use(express.json());
 
-// Connect to MongoDB
+/**
+ * Connects to MongoDB using the provided MONGO_URI environment variable.
+ * @throws {Error} If the connection fails, logs the error and exits the process.
+ */
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -26,14 +34,25 @@ mongoose
     process.exit(1);
   });
 
-// Routes
+/**
+ * Mounts the authentication routes under /api/auth.
+ */
 app.use("/api/auth", authRouter);
+
+/**
+ * Mounts the product routes under /api/products.
+ */
 app.use("/api/products", productRouter);
 
-// Error handler
+/**
+ * Applies the error handling middleware to catch and process errors.
+ */
 app.use(errorMiddleware);
 
-// Start the server
+/**
+ * Starts the Express server on the specified port.
+ * @constant {number} PORT - The port number from environment variable or default to 5000.
+ */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
