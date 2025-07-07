@@ -2,6 +2,10 @@ import { ProductUsecase } from "../usecases/product.usecase.mjs";
 import { ProductRepository } from "../repositories/product.repository.mjs";
 import { getPagination } from "../../../utils/pagination.utils.mjs";
 import { getSearchQuery } from "../../../utils/search.utils.mjs";
+import {
+  HTTP_STATUS_CODES,
+  PRODUCT_MESSAGES,
+} from "../../../infrasructure/constants/constants.mjs";
 
 const productUsecase = new ProductUsecase(new ProductRepository());
 
@@ -19,7 +23,10 @@ export class ProductController {
   async addProduct(req, res, next) {
     try {
       const product = await productUsecase.addProduct(req.body);
-      res.status(201).json({ message: "Product added", product });
+      res.status(HTTP_STATUS_CODES.CREATED).json({
+        message: PRODUCT_MESSAGES.ADDED,
+        product,
+      });
     } catch (error) {
       next(error);
     }
@@ -36,7 +43,10 @@ export class ProductController {
     try {
       const { id } = req.params;
       const product = await productUsecase.updateProduct(id, req.body);
-      res.status(200).json({ message: "Product updated", product });
+      res.status(HTTP_STATUS_CODES.OK).json({
+        message: PRODUCT_MESSAGES.UPDATED,
+        product,
+      });
     } catch (error) {
       next(error);
     }
@@ -53,7 +63,9 @@ export class ProductController {
     try {
       const { id } = req.params;
       await productUsecase.deleteProduct(id);
-      res.status(200).json({ message: "Product deleted" });
+      res.status(HTTP_STATUS_CODES.OK).json({
+        message: PRODUCT_MESSAGES.DELETED,
+      });
     } catch (error) {
       next(error);
     }
@@ -70,8 +82,12 @@ export class ProductController {
     try {
       const { page, limit } = getPagination(req.query);
       const searchQuery = getSearchQuery(req.query);
-      const products = await productUsecase.getAllProducts(searchQuery, page, limit);
-      res.status(200).json(products);
+      const products = await productUsecase.getAllProducts(
+        searchQuery,
+        page,
+        limit
+      );
+      res.status(HTTP_STATUS_CODES.OK).json(products);
     } catch (error) {
       next(error);
     }

@@ -1,4 +1,10 @@
 import mongoose from "mongoose";
+import {
+  COLLECTION_NAMES,
+  ORDER_FIELDS,
+  ORDER_STATUS,
+  PRODUCT_FIELDS,
+} from "../../../infrasructure/constants/constants.mjs";
 
 /**
  * Mongoose schema for the Order model.
@@ -13,15 +19,36 @@ import mongoose from "mongoose";
  */
 const orderSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    items: [
+    [ORDER_FIELDS.USER_ID]: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: COLLECTION_NAMES.USER,
+      required: true,
+    },
+    [ORDER_FIELDS.ITEMS]: [
       {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-        quantity: { type: Number, required: true },
+        [PRODUCT_FIELDS.PRODUCT_ID]: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: COLLECTION_NAMES.PRODUCT,
+        },
+        [PRODUCT_FIELDS.QUANTITY]: {
+          type: Number,
+          required: true,
+        },
       },
     ],
-    totalAmount: { type: Number, required: true },
-    status: { type: String, enum: ["placed", "shipped", "delivered"], default: "placed" },
+    [ORDER_FIELDS.TOTAL_AMOUNT]: {
+      type: Number,
+      required: true,
+    },
+    [ORDER_FIELDS.STATUS]: {
+      type: String,
+      enum: [
+        ORDER_STATUS.PLACED,
+        ORDER_STATUS.SHIPPED,
+        ORDER_STATUS.DELIVERED,
+      ],
+      default: ORDER_STATUS.PLACED,
+    },
   },
   { timestamps: true }
 );
@@ -30,4 +57,4 @@ const orderSchema = new mongoose.Schema(
  * Mongoose model for the Order collection.
  * @type {mongoose.Model}
  */
-export const Order = mongoose.model("Order", orderSchema);
+export const Order = mongoose.model(COLLECTION_NAMES.ORDER, orderSchema);

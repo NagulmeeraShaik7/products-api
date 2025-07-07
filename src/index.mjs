@@ -1,10 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import authRouter from "./apps/auth/routers/auth.route.mjs";
+import authRouter from "../src/apps/auth/routers/auth.route.mjs";
 import productRouter from "../src/apps/products/routers/prouduct.route.mjs";
 import errorMiddleware from "./middlewares/error.middleware.mjs";
 import setupSwagger from "./infrasructure/config/swaggerConfig.mjs";
+import { APP_CONSTANTS } from "../src/infrasructure/constants/constants.mjs";
 
 // Load environment variables
 dotenv.config();
@@ -26,24 +27,24 @@ app.use(express.json());
  */
 mongoose
   .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    [APP_CONSTANTS.MONGO_USE_NEW_URL_PARSER]: true,
+    [APP_CONSTANTS.MONGO_USE_UNIFIED_TOPOLOGY]: true,
   })
-  .then(() => console.log("✅ Connected to MongoDB"))
+  .then(() => console.log(APP_CONSTANTS.MONGO_CONNECTION_SUCCESS))
   .catch((err) => {
-    console.error("❌ MongoDB connection error:", err.message);
+    console.error(APP_CONSTANTS.MONGO_CONNECTION_ERROR, err.message);
     process.exit(1);
   });
 
 /**
  * Mounts the authentication routes under /api/auth.
  */
-app.use("/api/auth", authRouter);
+app.use(APP_CONSTANTS.AUTH_ROUTE_PREFIX, authRouter);
 
 /**
  * Mounts the product routes under /api/products.
  */
-app.use("/api/products", productRouter);
+app.use(APP_CONSTANTS.PRODUCT_ROUTE_PREFIX, productRouter);
 
 /**
  * Configures Swagger UI for API documentation.
@@ -61,6 +62,6 @@ app.use(errorMiddleware);
  */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📜 Swagger UI available at http://localhost:${PORT}/api-docs`);
+  console.log(`${APP_CONSTANTS.SERVER_START_MESSAGE}${PORT}`);
+  console.log(`${APP_CONSTANTS.SWAGGER_UI_MESSAGE}${PORT}${APP_CONSTANTS.SWAGGER_UI_PATH}`);
 });

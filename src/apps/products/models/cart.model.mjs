@@ -1,4 +1,10 @@
 import mongoose from "mongoose";
+import {
+  COLLECTION_NAMES,
+  CART_FIELDS,
+  PRODUCT_FIELDS,
+  USER_FIELDS,
+} from "../../../infrasructure/constants/constants.mjs";
 
 /**
  * Mongoose schema for the Cart model.
@@ -11,11 +17,21 @@ import mongoose from "mongoose";
  */
 const cartSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    items: [
+    [CART_FIELDS.USER_ID]: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: COLLECTION_NAMES.USER,
+      required: true,
+    },
+    [CART_FIELDS.ITEMS]: [
       {
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-        quantity: { type: Number, default: 1 },
+        [PRODUCT_FIELDS.PRODUCT_ID]: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: COLLECTION_NAMES.PRODUCT,
+        },
+        [PRODUCT_FIELDS.QUANTITY]: {
+          type: Number,
+          default: 1,
+        },
       },
     ],
   },
@@ -26,4 +42,4 @@ const cartSchema = new mongoose.Schema(
  * Mongoose model for the Cart collection.
  * @type {mongoose.Model}
  */
-export const Cart = mongoose.model("Cart", cartSchema);
+export const Cart = mongoose.model(COLLECTION_NAMES.CART, cartSchema);

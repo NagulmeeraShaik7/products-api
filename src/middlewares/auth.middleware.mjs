@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { AUTH_CONSTANTS } from "../infrasructure/constants/constants.mjs";
 
 /**
  * Middleware to authenticate requests using JWT.
@@ -9,8 +10,8 @@ import jwt from "jsonwebtoken";
  */
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "Authorization token missing or invalid" });
+  if (!authHeader?.startsWith(AUTH_CONSTANTS.BEARER_PREFIX)) {
+    return res.status(401).json({ error: AUTH_CONSTANTS.TOKEN_MISSING_ERROR });
   }
 
   const token = authHeader.split(" ")[1];
@@ -20,7 +21,7 @@ const authMiddleware = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (err) {
-    return res.status(401).json({ error: "Invalid or expired token" });
+    return res.status(401).json({ error: AUTH_CONSTANTS.TOKEN_INVALID_ERROR });
   }
 };
 

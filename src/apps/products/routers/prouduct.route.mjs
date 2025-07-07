@@ -2,6 +2,10 @@ import express from "express";
 import { ProductController } from "../controllers/product.controller.mjs";
 import authMiddleware from "../../../middlewares/auth.middleware.mjs";
 import roleMiddleware from "../../../middlewares/role.middleware.mjs";
+import {
+  ROUTES,
+  USER_ROLES,
+} from "../../../infrasructure/constants/constants.mjs";
 
 const router = express.Router();
 const controller = new ProductController();
@@ -73,7 +77,7 @@ const controller = new ProductController();
  *       500:
  *         description: Internal server error
  */
-router.get("/",  authMiddleware, controller.getAllProducts);
+router.get(ROUTES.ROOT, authMiddleware, controller.getAllProducts);
 
 /**
  * @swagger
@@ -150,7 +154,7 @@ router.get("/",  authMiddleware, controller.getAllProducts);
  *       500:
  *         description: Internal server error
  */
-router.post("/", authMiddleware, roleMiddleware("admin"), controller.addProduct);
+router.post(ROUTES.ROOT, authMiddleware, roleMiddleware(USER_ROLES.ADMIN), controller.addProduct);
 
 /**
  * @swagger
@@ -161,7 +165,7 @@ router.post("/", authMiddleware, roleMiddleware("admin"), controller.addProduct)
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - in Datum: path
+ *       - in: path
  *         name: id
  *         required: true
  *         schema:
@@ -232,7 +236,7 @@ router.post("/", authMiddleware, roleMiddleware("admin"), controller.addProduct)
  *       500:
  *         description: Internal server error
  */
-router.put("/:id", authMiddleware, roleMiddleware("admin"), controller.updateProduct);
+router.put(ROUTES.BY_ID, authMiddleware, roleMiddleware(USER_ROLES.ADMIN), controller.updateProduct);
 
 /**
  * @swagger
@@ -269,6 +273,6 @@ router.put("/:id", authMiddleware, roleMiddleware("admin"), controller.updatePro
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", authMiddleware, roleMiddleware("admin"), controller.deleteProduct);
+router.delete(ROUTES.BY_ID, authMiddleware, roleMiddleware(USER_ROLES.ADMIN), controller.deleteProduct);
 
 export default router;

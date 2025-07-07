@@ -1,6 +1,8 @@
+import { ROLE_CONSTANTS } from "../infrasructure/constants/constants.mjs";
+
 /**
  * Middleware factory to restrict access based on user role.
- * @param {string} requiredRole - The role required to access the route (e.g., "admin", "customer").
+ * @param {string} requiredRole - The role required to access the route (e.g., "{ROLE_CONSTANTS.ROLE_ADMIN}", "{ROLE_CONSTANTS.ROLE_CUSTOMER}").
  * @returns {Function} Middleware function to check user role.
  */
 const roleMiddleware = (requiredRole) => {
@@ -13,7 +15,7 @@ const roleMiddleware = (requiredRole) => {
    */
   return (req, res, next) => {
     if (req.user?.role !== requiredRole) {
-      return res.status(403).json({ error: "Access denied. Insufficient permissions." });
+      return res.status(403).json({ error: ROLE_CONSTANTS.ACCESS_DENIED_ERROR });
     }
     next();
   };
