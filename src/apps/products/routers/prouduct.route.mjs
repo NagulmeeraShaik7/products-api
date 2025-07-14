@@ -77,7 +77,7 @@ const controller = new ProductController();
  *       500:
  *         description: Internal server error
  */
-router.get(ROUTES.ROOT, authMiddleware, controller.getAllProducts);
+router.get(ROUTES.ROOT, authMiddleware, roleMiddleware(USER_ROLES.CUSTOMER), controller.getAllProducts);
 
 /**
  * @swagger
